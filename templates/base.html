@@ -1,0 +1,261 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Maina Kamau">
+    <title>Title</title>
+    {% block css %}
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+        <link href="{% static "site.css" %}" rel="stylesheet">
+        <link href="{% static "main.css" %}" rel="stylesheet">
+    {% endblock %}
+</head>
+<body class="bg-[#B2AFAF]">
+{% block bodycontent %}
+    {% if user.is_authenticated %}
+        <!-- component -->
+        <div class="font-sans antialiased h-screen flex">
+            <!-- Sidebar / channel list -->
+            <div class="bg-white border border-1 border-gray text-purple-lighter flex-none w-52 pb-6 hidden md:block">
+                <div class="text-white mb-2 mt-3 px-4 flex justify-between">
+                    <div class="w-full">
+                        <a href="{% url 'dashboard' %}">
+                            <img class="rounded-full mx-auto underline"
+                                 src="{% static "/images/beach.png" %}" alt="logo"
+                                 width="100"/>
+                        </a>
+
+                        <div class="flex items-center mb-6">
+                            <span class="bg-green rounded-full block w-2 h-2 mr-2"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <hr class="border-0 bg-gray-300 text-gray-300 h-px w-400 max-w-full">
+                <ul class="mt-12 pl-0">
+                    <li class="flex w-full justify-between text-gray-700 pl-3 hover:text-gray-300 text-bold cursor-pointer items-center mb-6
+                    {% if request.path == '/dashboard/' %} h-10 bg-gray-300 {% endif %}">
+                        <a href="{% url 'dashboard' %}"
+                           class="flex items-center focus:outline-none">
+                            <img class="rounded-full h-7 w-7" src="{% static 'images/dashboard.png' %}"
+                                 alt="dashboard"/>
+                            <span class="md:text-lg pl-5">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6
+                        {% if request.path == '/employees/' %} h-10 bg-gray-300 {% endif %}">
+                        <a href="{% url 'employees' %}"
+                           class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                            <img class="rounded-full h-7 w-7" src="{% static 'images/users.png' %}"
+                                 alt="employees"/>
+                            <span class="md:text-lg pl-5">Employees</span>
+                        </a>
+                    </li>
+                    <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6
+                        {% if request.path == '/time-off/requests/' %} h-10 bg-gray-300 {% endif %}">
+                        <a href="{% url 'requests' %}"
+                           class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                            <img class="rounded-full h-7 w-7" src="{% static 'images/sunset.png' %}"
+                                 alt="vacation"/>
+                            <span class="md:text-lg pl-5">Time Off</span>
+                        </a>
+                    </li>
+                    <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6
+                        {% if request.path == '/time-off/time-off-types/' %} h-10 bg-gray-300 {% endif %}">
+                        <a href="{% url 'time-off-types' %}"
+                           class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                            <img class="rounded-full h-7 w-7" src="{% static 'images/mom.png' %}"
+                                 alt="vacation"/>
+                            <span class="md:text-sm pl-5 pt-2 pb-3">Time Off Types</span>
+                        </a>
+                    </li>
+                    <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6
+                        {% if request.path == '/time-off/holidays/' %} h-10 bg-gray-300 {% endif %}">
+                        <a href="{% url 'holidays' %}"
+                           class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                            <img class="rounded-full h-7 w-7" src="{% static 'images/umbrella.png' %}"
+                                 alt="vacation"/>
+                            <span class="md:text-lg pl-5">Holidays</span>
+                        </a>
+                    </li>
+                    <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6
+                        {% if request.path == '/reports/' %} h-10 bg-gray-300 {% endif %}">
+                        <a href="{% url 'reports' %}"
+                           class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                            <img class="rounded-full h-7 w-7" src="{% static 'images/report.png' %}"
+                                 alt="reports icon"/>
+                            <span class="md:text-lg pl-5">Reports</span>
+                        </a>
+                    </li>
+                    <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6
+                        {% if request.path == '/settings/' %} h-10 bg-gray-300 {% endif %}">
+                        <a href="{% url 'settings' %}"
+                           class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                            <img class="rounded-full h-7 w-7" src="{% static 'images/setting.png' %}"
+                                 alt="settings"/>
+                            <span class="md:text-lg pl-5">Settings</span>
+                        </a>
+                    </li>
+                    <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6">
+                        <a href="{% url 'sign-out' %}"
+                           class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                            <img class="rounded-full h-7 w-7" src="{% static 'images/logout.png' %}"
+                                 alt="log out"/>
+                            <span class="text-sm pl-5">Log Out</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--Mobile sidebar -->
+            <div class="w-64 z-40 absolute bg-white shadow h-screen flex-col justify-between sm:hidden transition duration-150 ease-in-out"
+                 id="mobile-nav">
+                <button aria-label="toggle sidebar" id="openSideBar"
+                        class="h-10 w-10 bg-white absolute right-0 mt-16 -mr-10 flex items-center shadow rounded-tr rounded-br justify-center cursor-pointer focus:outline-none rounded"
+                        onclick="sidebarHandler(true)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-adjustments" width="20"
+                         height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#A9A9A9" fill="none"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z"/>
+                        <circle cx="6" cy="10" r="2"/>
+                        <line x1="6" y1="4" x2="6" y2="8"/>
+                        <line x1="6" y1="12" x2="6" y2="20"/>
+                        <circle cx="12" cy="16" r="2"/>
+                        <line x1="12" y1="4" x2="12" y2="14"/>
+                        <line x1="12" y1="18" x2="12" y2="20"/>
+                        <circle cx="18" cy="7" r="2"/>
+                        <line x1="18" y1="4" x2="18" y2="5"/>
+                        <line x1="18" y1="9" x2="18" y2="20"/>
+                    </svg>
+                </button>
+                <button aria-label="Close sidebar" id="closeSideBar"
+                        class="hidden h-10 w-10 bg-gray-800 absolute right-0 mt-16 -mr-10 flex items-center shadow rounded-tr rounded-br justify-center cursor-pointer text-white"
+                        onclick="sidebarHandler(false)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="20"
+                         height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z"/>
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+                <div class="px-8">
+                    <div class="text-white mb-2 mt-3 px-4 flex justify-between">
+                        <div class="w-full">
+                            <img class="rounded-full mx-auto underline" src="{% static "/images/beach.png" %}"
+                                 alt="logo"
+                                 width="100"/>
+                            <div class="flex items-center mb-6">
+                                <span class="bg-green rounded-full block w-2 h-2 mr-2"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <ul class="mt-12 pl-0">
+                        <li class="flex w-full justify-between text-gray-700 pl-3 hover:text-gray-300 text-bold cursor-pointer items-center mb-6
+                        {% if request.path == '/dashboard/' %} h-10 bg-gray-300 {% endif %}">
+                            <a href="{% url 'dashboard' %}"
+                               class="flex items-center focus:outline-none">
+                                <img class="rounded-full h-7 w-7" src="{% static 'images/dashboard.png' %}"
+                                     alt="dashboard"/>
+                                <span class="text-sm pl-5">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6
+                        {% if request.path == '/employees/' %} h-10 bg-gray-300 {% endif %}">
+                            <a href="{% url 'employees' %}"
+                               class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                                <img class="rounded-full h-7 w-7" src="{% static 'images/users.png' %}"
+                                     alt="employees"/>
+                                <span class="text-sm pl-5">Employees</span>
+                            </a>
+                        </li>
+                        <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6
+                        {% if request.path == '/time-off/requests/' %} h-10 bg-gray-300 {% endif %}">
+                            <a href="{% url 'requests' %}"
+                               class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                                <img class="rounded-full h-7 w-7" src="{% static 'images/sunset.png' %}"
+                                     alt="vacation"/>
+                                <span class="text-sm pl-5">Time Off</span>
+                            </a>
+                        </li>
+                        <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6
+                        {% if request.path == '/time-off/time-off-types/' %} h-10 bg-gray-300 {% endif %}">
+                            <a href="{% url 'time-off-types' %}"
+                               class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                                <img class="rounded-full h-7 w-7" src="{% static 'images/mom.png' %}"
+                                     alt="vacation"/>
+                                <span class="text-xs pl-5">Time Off Types</span>
+                            </a>
+                        </li>
+                        <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6
+                        {% if request.path == '/time-off/holidays/' %} h-10 bg-gray-300 {% endif %}">
+                            <a href="{% url 'holidays' %}"
+                               class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                                <img class="rounded-full h-7 w-7" src="{% static 'images/umbrella.png' %}"
+                                     alt="vacation"/>
+                                <span class="text-sm pl-5">Holidays</span>
+                            </a>
+                        </li>
+                        <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6
+                        {% if request.path == '/reports/' %} h-10 bg-gray-300 {% endif %}">
+                            <a href="{% url 'reports' %}"
+                               class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                                <img class="rounded-full h-7 w-7" src="{% static 'images/report.png' %}"
+                                     alt="reports icon"/>
+                                <span class="text-sm pl-5">Reports</span>
+                            </a>
+                        </li>
+                        <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6
+                        {% if request.path == '/settings/' %} h-10 bg-gray-300 {% endif %}">
+                            <a href="{% url 'settings' %}"
+                               class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                                <img class="rounded-full h-7 w-7" src="{% static 'images/setting.png' %}"
+                                     alt="settings"/>
+                                <span class="text-sm pl-5">Settings</span>
+                            </a>
+                        </li>
+
+                        <li class="flex w-full justify-between pl-3 text-gray-700 hover:text-gray-300 cursor-pointer items-center mb-6">
+                            <a href="{% url 'sign-out' %}"
+                               class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                                <img class="rounded-full h-7 w-7" src="{% static 'images/logout.png' %}"
+                                     alt="log out"/>
+                                <span class="text-sm pl-5">Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Chat content -->
+            <div class="flex-1 flex flex-col overflow-hidden">
+                <!-- Top bar -->
+                <div class="border-b flex px-6 bg-white py-2 items-center flex-none">
+                    <div class="flex flex-col">
+                        <h3 class="text-grey-darkest mb-1 text-lg">{{ user.organization }}</h3>
+                        <div class="text-grey-dark text-sm truncate">
+                            {{ user.organization.country }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat messages -->
+                <div class="px-6 py-4 flex-1 overflow-y-auto">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+
+    {% endif %}
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static "script.js" %}"></script>
+</body>
+</html>

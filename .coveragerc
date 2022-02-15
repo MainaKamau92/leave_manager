@@ -1,0 +1,9 @@
+[run]
+omit =
+        *venv*
+        *migrations*
+        *virtualenvs*
+        *tests*
+[report]
+[html]
+directory = coverage_report

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block bodycontent %}
+    <div class="w-full max-w-lg signup-form mx-auto">
+        <img class="object-fill h-49 w-full mx-auto" src="{% static "images/logo.png" %}">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold text-center">{{ message }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form method="POST" id="personal_details_form">
+            {% csrf_token %}
+            <div class="flex flex-wrap -mx-3 mb-6 mt-5">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block mb-2 text-sm text-gray-600 dark:text-gray-400 font-bold">
+                        First Name
+                    </label>
+                    {{ new_user_form.first_name }}
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                    <label class="block mb-2 text-sm text-gray-600 dark:text-gray-400 font-bold">
+                        Last Name
+                    </label>
+                    {{ new_user_form.last_name }}
+                </div>
+            </div>
+
+
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block mb-2 text-sm text-gray-600 dark:text-gray-400 font-bold">
+                        Email
+                    </label>
+                    {{ new_user_form.email }}
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                    <label class="block mb-2 text-sm text-gray-600 dark:text-gray-400 font-bold">
+                        Job Title
+                    </label>
+                    {{ new_user_form.job_title }}
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+                    Birthday Date
+                </label>
+                {{ new_user_form.birthday_date }}
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+                    Password
+                </label>
+                {{ new_user_form.password1 }}
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+                    Confirm Password
+                </label>
+                {{ new_user_form.password2 }}
+            </div>
+            <div class="mb-6">
+                <input type="submit"
+                       value="Register"
+                       name="new_user"
+                       class="cursor-pointer shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline
+             focus:outline-none text-white font-bold py-2 px-4 rounded"/>
+
+            </div>
+        </form>
+    </div>
+{% endblock %}

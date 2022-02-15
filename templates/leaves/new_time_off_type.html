@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container mx-auto">
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                    <div class="alert absolute bottom-5 right-5 h-20 w-50 inline-flex max-w-sm w-full bg-white shadow-md rounded-lg overflow-hidden ">
+                        <div class="flex justify-center items-center w-12 bg-green-500">
+                            <svg class="h-6 w-6 fill-current text-white" viewBox="0 0 40 40"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z"></path>
+                            </svg>
+                        </div>
+                        <div class="-mx-3 py-2 px-4">
+                            <div class="mx-3"><span class="text-green-500 font-semibold">Success</span>
+                                <p class="text-gray-600 text-sm"> {{ message }} </p></div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="container text-center bg-red-100 mb-3 mt-3 border border-red-400 text-red-700 px-4 py-3 rounded relative mx-auto"
+                         role="alert" id={{ forloop.counter }}>
+                        <span class="block sm:inline">{{ message }}</span>
+                        <span class="absolute top-0 bottom-0 right-0 px-4 py-3"
+                              onclick="removeErrorDiv({{ forloop.counter }})">
+                                    <svg class="fill-current h-6 w-6 text-red-500" role="button"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <title>Close</title>
+                                        <path
+                                                d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
+                                    </svg>
+                                  </span>
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        {% endif %}
+        <div class="bg-gray-100 p-0 sm:p-12">
+            <div class="mx-auto px-6 py-12 bg-white border-0 shadow-sm sm:rounded-md md:w-2/5">
+
+                <div class="divide-y divide-gray-500">
+                    <h1 class="divide-y divide-black-500">New Time Off Type</h1>
+
+                    <form method="POST" id="personal_details_form">
+                        {% csrf_token %}
+
+                        <div class="flex flex-wrap -mx-3 mb-6 mt-5">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block mb-2 text-sm text-gray-600 dark:text-gray-400 font-bold">
+                                    Name
+                                </label>
+                                {{ time_off_type_form.name }}
+                            </div>
+                            <div class="w-full md:w-1/2 px-3">
+                                <label class="block mb-2 text-sm text-gray-600 dark:text-gray-400 font-bold">
+                                    Annual Days
+                                </label>
+                                {{ time_off_type_form.annual_days }}
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+                                Accruing
+                            </label>
+                            {{ time_off_type_form.accruing }}
+                        </div>
+
+                        <div class="mb-0">
+                            <input type="submit"
+                                   value="Create"
+                                   name="time_off_type_details"
+                                   class="hover:bg-green-400 text-lg py-1.5 px-10 shadow-lg no-underline rounded-md
+                                   cursor-pointer
+                                           bg-green-500 text-white font-mono
+                                           text-sm  btn-primary hover:text-white
+                                           focus:outline-none active:shadow-none"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

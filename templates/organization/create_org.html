@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="flex flex-col bg-gray-100 mt-16">
+        <div class="grid place-items-center mx-2 my-20 sm:my-auto">
+            <div class="w-11/12 p-12 sm:w-8/12 md:w-6/12 lg:w-5/12 2xl:w-4/12
+            px-6 py-10 sm:px-10 sm:py-6
+            bg-white rounded-lg shadow-md lg:shadow-lg">
+
+                <h2 class="text-center font-semibold text-3xl lg:text-4xl text-gray-800">
+                    Organization
+                </h2>
+
+                <form class="mt-10" method="POST">
+                    {% csrf_token %}
+                    <div>
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                            Organization Name
+                        </label>
+                        {{ form.name }}
+                    </div>
+                    <div>
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                            Organization Location
+                        </label>
+                        {{ form.country }}
+
+                    </div>
+
+                    <button type="submit"
+                            class="mt-5 w-full hover:bg-green-400 text-lg py-1.5 px-10 shadow-lg no-underline rounded-md
+                                   cursor-pointer
+                                           bg-green-500 text-white font-mono
+                                           text-sm  btn-primary hover:text-white
+                                           focus:outline-none active:shadow-none">
+                        Save
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

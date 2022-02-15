@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+{% block bodycontent %}
+    {% if messages %}
+        <div class="alert absolute bottom-5 right-5 h-50 w-50 inline-flex max-w-sm w-full bg-white shadow-md rounded-lg overflow-hidden">
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                    <div class="flex justify-center items-center w-12 bg-green-500">
+                        <svg class="h-6 w-6 fill-current text-white" viewBox="0 0 40 40"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z"></path>
+                        </svg>
+                    </div>
+                    <div class="-mx-3 py-1 px-3">
+                        <div class="mx-6"><span class="text-green-500 font-semibold">Success</span>
+                            <ul class="pb-2">
+                                <li class="text-gray-600 text-sm">{{ message }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="flex justify-center items-center w-12 bg-red-500">
+                        <svg class="h-6 w-6 fill-current text-white" viewBox="0 0 40 40"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z"></path>
+                        </svg>
+                    </div>
+                    <div class="-mx-3 py-1 px-3">
+                        <div class="mx-6"><span class="text-red-500 font-semibold">Error</span>
+                            <ul class="pb-2">
+                                <li class="text-gray-600 text-sm">{{ message }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="container md:mt-56 max-w-md mx-auto xl:max-w-3xl h-full flex bg-white rounded-lg shadow overflow-hidden">
+        <div class="relative hidden xl:block xl:w-1/2 h-full">
+            <img class="absolute object-contain h-64 w-full my-20"
+                 src="{% static "images/logo.png" %}"
+                 alt="glice org logo"/>
+        </div>
+        <div class="w-full xl:w-1/2 p-8">
+            <form method="post" class="login_form">
+                {% csrf_token %}
+                <h1 class=" text-2xl font-bold">Sign in to your account</h1>
+                <div>
+                    <span class="text-gray-600 text-sm">Don't have an account?</span>
+                    <span class="text-gray-700 text-sm font-semibold">
+                        <a href="{% url 'sign-up' %}">
+                            Sign up
+                        </a>
+                    </span>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2">
+                        Email
+                    </label>
+                    {{ form.email }}
+                </div>
+                <div class="mb-3 mt-3">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2">
+                        Password
+                    </label>
+                    {{ form.password }}
+                    <a class="inline-block align-baseline text-sm text-gray-600 hover:text-gray-800"
+                       href="{% url 'password-reset-request' %}">
+                        Forgot Password?
+                    </a>
+                </div>
+                <div class="md:flex md:items-center mb-3">
+                    <label class="md:w-2/3 block text-gray-500 font-bold">
+                        {{ form.remember_me }}
+                        <span class="text-sm">
+                            Remember me?
+                          </span>
+                    </label>
+                </div>
+                <div class="flex w-full mt-6">
+                    <button class="w-full bg-gray-800 hover:bg-grey-900 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10"
+                            type="submit">
+                        Sign in
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+{% load time_off_tags %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class="alert absolute bottom-5 right-5 h-20 w-50 inline-flex max-w-sm w-full bg-white shadow-md rounded-lg overflow-hidden">
+                    <div class="flex justify-center items-center w-12 bg-green-500">
+                        <svg class="h-6 w-6 fill-current text-white" viewBox="0 0 40 40"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z"></path>
+                        </svg>
+                    </div>
+                    <div class="-mx-3 py-2 px-4">
+                        <div class="mx-3"><span class="text-green-500 font-semibold">Success</span>
+                            <p class="text-gray-600 text-sm"> {{ message }} </p></div>
+                    </div>
+                </div>
+
+            {% else %}
+                <div class="container text-center bg-red-100 mb-3 mt-3 border border-red-400 text-red-700 px-4 py-3 rounded relative mx-auto"
+                     role="alert" id={{ forloop.counter }}>
+                    <span class="block sm:inline">{{ message }}</span>
+                    <span class="absolute top-0 bottom-0 right-0 px-4 py-3"
+                          onclick="removeErrorDiv({{ forloop.counter }})">
+                                    <svg class="fill-current h-6 w-6 text-red-500" role="button"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <title>Close</title>
+                                        <path
+                                                d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
+                                    </svg>
+                                  </span>
+                </div>
+            {% endif %}
+
+        {% endfor %}
+    {% endif %}
+    <section class="container mx-auto mt-5">
+        {% if holidays_exist %}
+            <div class="tooltip">
+                <a href="{% url 'custom-holiday' %}">
+                    <img class="mb-5 cursor-pointer"
+                         src="{% static '/images/add.png' %}" width="30"/>
+                </a>
+                <div class="top">
+                    <p>add new holiday</p>
+                </div>
+            </div>
+                <table class="min-w-full mx-auto">
+                    <thead>
+                    <tr>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                            Name
+                        </th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                            From Date
+                        </th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                            To Date
+                        </th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4
+                font-medium text-gray-500 uppercase tracking-wider">
+                            Days
+                        </th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-center
+                text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                            Custom/Default
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                    {% for holiday in custom_holidays %}
+                        <tr class="hover:bg-gray-300 cursor-pointer"
+                            onclick="window.location='/time-off/custom-holidays/edit/{{ holiday.custom_holiday_uuid }}';">
+                            <td class="px-3 py-4 whitespace-nowrap border-b border-gray-200">
+                                <div class="flex items-center">
+                                    <div class="ml-4">
+                                        <div class="text-sm leading-5 font-medium text-gray-900">{{ holiday.name }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-3 py-4 whitespace-nowrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                {{ holiday.from_date }}
+                            </td>
+                            <td class="px-3 py-4 whitespace-nowrap border-b border-gray-200">
+                                <div class="text-sm leading-5 text-gray-500">{{ holiday.to_date }}</div>
+                            </td>
+                            <td class="px-3 py-4 whitespace-nowrap border-b border-gray-200">
+                                <div class="text-sm leading-5 text-gray-500">
+                                    {{ holiday.to_date|timeuntil:holiday.from_date }}</div>
+                            </td>
+                            <td class="px-3 py-4 whitespace-nowrap border-b border-gray-200">
+                                <div class="text-sm leading-5 text-gray-500 text-center">Custom</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for holiday in default_holidays %}
+                        <tr class="hover:bg-gray-300 cursor-pointer">
+                            <td class="px-3 py-4 whitespace-nowrap border-b border-gray-200">
+                                <div class="flex items-center">
+                                    <div class="ml-4">
+                                        <div class="text-sm leading-5 font-medium text-gray-900">
+                                            {{ holiday|tuple_slice:"1" }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-3 py-4 whitespace-nowrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                {{ holiday|tuple_slice:"0" }}
+                            </td>
+                            <td class="px-3 py-4 whitespace-nowrap border-b border-gray-200">
+                                <div class="text-sm leading-5 text-gray-500">{{ holiday|tuple_slice:"0" }}</div>
+                            </td>
+                            <td class="px-3 py-4 whitespace-nowrap border-b border-gray-200">
+                                <div class="text-sm leading-5 text-gray-500">1 days</div>
+                            </td>
+                            <td class="px-3 py-4 whitespace-nowrap border-b border-gray-200">
+                                <div class="text-sm leading-5 text-gray-500 text-center">Default</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+        {% else %}
+            <div class="flex justify-center">
+                <a href="{% url 'custom-holiday' %}">
+                    <div class="h-screen rounded sm:w-full md:w-48 md:h-48 py-8 text-center opacity-50 md:border-solid md:border-2 md:border-gray-400">
+                        <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                             viewBox="0 0 28 28">
+                            <path d="M 14 0 C 6.273936 0 0 6.274 0 14 C 0 21.7261 6.273936 28 14 28 C 21.726064 28 28 21.7261 28 14 C 28 6.274 21.726064 0 14 0 z M 14 1 C 21.185624 1 27 6.8144 27 14 C 27 21.1857 21.185624 27 14 27 C 6.814376 27 1 21.1857 1 14 C 1 6.8144 6.814376 1 14 1 z M 18.619141 7.2285156 A 0.50004994 0.50004994 0 0 0 18.150391 7.84375 L 18.257812 8.3222656 L 13.869141 9.3085938 A 0.50004994 0.50004994 0 0 0 13.490234 9.90625 L 13.599609 10.394531 L 9.2089844 11.380859 A 0.50004994 0.50004994 0 0 0 8.8320312 11.978516 L 8.9414062 12.46875 L 6.9902344 12.90625 A 0.50004994 0.50004994 0 0 0 6.4824219 12.509766 A 0.50004994 0.50004994 0 0 0 6.0136719 13.125 L 6.0976562 13.501953 A 0.50004994 0.50004994 0 0 0 6.1464844 13.720703 L 6.2324219 14.101562 A 0.50038679 0.50038679 0 0 0 7.2089844 13.882812 L 9.1601562 13.443359 L 9.2695312 13.929688 A 0.50004994 0.50004994 0 0 0 9.8671875 14.308594 L 14.257812 13.322266 L 14.367188 13.810547 A 0.50004994 0.50004994 0 0 0 14.964844 14.1875 L 19.355469 13.201172 L 19.462891 13.681641 A 0.50038655 0.50038655 0 1 0 20.439453 13.462891 L 20.228516 12.529297 A 0.50004994 0.50004994 0 0 0 20.220703 12.494141 L 19.34375 8.5917969 L 19.126953 7.625 A 0.50004994 0.50004994 0 0 0 18.619141 7.2285156 z M 12.908203 14.490234 A 0.50004994 0.50004994 0 0 0 12.447266 14.951172 L 10.46875 22.369141 A 0.50029086 0.50029086 0 0 0 11.435547 22.626953 L 12.949219 16.947266 L 14.464844 22.626953 A 0.50029101 0.50029101 0 1 0 15.431641 22.369141 L 13.451172 14.945312 A 0.50004994 0.50004994 0 0 0 13.107422 14.515625 A 0.50004994 0.50004994 0 0 0 13.0625 14.503906 A 0.50004994 0.50004994 0 0 0 13.058594 14.503906 A 0.50004994 0.50004994 0 0 0 13.009766 14.494141 A 0.50004994 0.50004994 0 0 0 12.964844 14.494141 A 0.50004994 0.50004994 0 0 0 12.958984 14.494141 A 0.50004994 0.50004994 0 0 0 12.908203 14.494141 L 12.908203 14.490234 z "/>
+                        </svg>
+                        <div class="py-4">
+                            Create New
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}
